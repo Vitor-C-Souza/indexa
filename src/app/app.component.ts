@@ -1,19 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { ContainerComponent } from './componentes/container/container.component';
-import { CabecalhoComponent } from './componentes/cabecalho/cabecalho.component';
-import { SeparadorComponent } from './componentes/separador/separador.component';
-import { ContatoComponent } from './componentes/contato/contato.component';
-import { FormsModule } from '@angular/forms';
 
-interface Contato {
-  id: number;
-  nome: string;
-  telefone: string;
-}
-
-import agenda from './agenda.json';
+import { FormularioContatoComponent } from './paginas/formulario-contato/formulario-contato.component';
+import { ListaContatoComponent } from './paginas/lista-contato/lista-contato.component';
 
 @Component({
   selector: 'app-root',
@@ -21,44 +11,10 @@ import agenda from './agenda.json';
   imports: [
     CommonModule,
     RouterOutlet,
-    ContainerComponent,
-    CabecalhoComponent,
-    SeparadorComponent,
-    ContatoComponent,
-    FormsModule,
+    FormularioContatoComponent,
+    ListaContatoComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
-  alfabeto: string = 'abcdefghijklmnopqrstuvwxyz';
-  contatos: Contato[] = agenda;
-
-  filtroPorTexto: string = '';
-
-  filtrarContatosPorTexto(): Contato[] {
-    if (!this.filtroPorTexto) {
-      return this.contatos;
-    }
-
-    const textoNormalizado = this.filtroPorTexto
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '');
-
-    return this.contatos.filter((contato) => {
-      const nomeNormalizado = contato.nome
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '');
-
-      return nomeNormalizado.includes(textoNormalizado);
-    });
-  }
-
-  filtrarContatosPorLetraInicial(letra: string): Contato[] {
-    return this.filtrarContatosPorTexto().filter((contato) => {
-      return contato.nome.toLowerCase().startsWith(letra);
-    });
-  }
-}
+export class AppComponent {}
